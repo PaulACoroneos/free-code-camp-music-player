@@ -9,70 +9,70 @@ const allSongs = [
   {
     id: 0,
     title: "Scratching The Surface",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "4:25",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/scratching-the-surface.mp3",
   },
   {
     id: 1,
     title: "Can't Stay Down",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "4:15",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/cant-stay-down.mp3",
   },
   {
     id: 2,
     title: "Still Learning",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:51",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/still-learning.mp3",
   },
   {
     id: 3,
     title: "Cruising for a Musing",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:34",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/cruising-for-a-musing.mp3",
   },
   {
     id: 4,
     title: "Never Not Favored",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:35",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/never-not-favored.mp3",
   },
   {
     id: 5,
     title: "From the Ground Up",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:12",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/from-the-ground-up.mp3",
   },
   {
     id: 6,
     title: "Walking on Air",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:25",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/walking-on-air.mp3",
   },
   {
     id: 7,
     title: "Can't Stop Me. Can't Even Slow Me Down.",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:52",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/cant-stop-me-cant-even-slow-me-down.mp3",
   },
   {
     id: 8,
     title: "The Surest Way Out is Through",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "3:10",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/the-surest-way-out-is-through.mp3",
   },
   {
     id: 9,
     title: "Chasing That Feeling",
-    artist: "Quincy Larson",
+    artist: "Paul Coroneos",
     duration: "2:43",
     src: "https://s3.amazonaws.com/org.freecodecamp.mp3-player-project/chasing-that-feeling.mp3",
   },
@@ -106,7 +106,6 @@ const playSong = (id) => {
 
 const pauseSong = () => {
   userData.songCurrentTime = audio.currentTime;
-  
   playButton.classList.remove("playing");
   audio.pause();
 };
@@ -122,14 +121,14 @@ const playNextSong = () => {
   }
 };
 
-const playPreviousSong = () =>{
-   if (userData?.currentSong === null) return;
-   else {
+const playPreviousSong = () => {
+  if (userData?.currentSong === null) return;
+  else {
     const currentSongIndex = getCurrentSongIndex();
     const previousSong = userData?.songs[currentSongIndex - 1];
 
     playSong(previousSong.id);
-   }
+  }
 };
 
 const shuffle = () => {
@@ -184,8 +183,8 @@ const setPlayerDisplay = () => {
   const currentTitle = userData?.currentSong?.title;
   const currentArtist = userData?.currentSong?.artist;
 
-  playingSong.textContent = currentTitle ? currentTitle : "";
-  songArtist.textContent = currentArtist ? currentArtist : "";
+  playingSong.textContent = currentTitle ?? "";
+  songArtist.textContent = currentArtist ?? "";
 };
 
 const highlightCurrentSong = () => {
@@ -203,7 +202,7 @@ const highlightCurrentSong = () => {
 
 const renderSongs = (array) => {
   const songsHTML = array
-    .map((song)=> {
+    .map((song) => {
       return `
       <li id="song-${song.id}" class="playlist-song">
       <button class="playlist-song-info" onclick="playSong(${song.id})">
@@ -254,21 +253,20 @@ audio.addEventListener("ended", () => {
   const currentSongIndex = getCurrentSongIndex();
   const nextSongExists = userData?.songs[currentSongIndex + 1] !== undefined;
 
-    if (nextSongExists) {
-      playNextSong();
-    } else {
-      userData.currentSong = null;
-      userData.songCurrentTime = 0;  
-pauseSong();
-setPlayerDisplay();
-highlightCurrentSong();
-setPlayButtonAccessibleText();
-
-    }
+  if (nextSongExists) {
+    playNextSong();
+  } else {
+    userData.currentSong = null;
+    userData.songCurrentTime = 0;
+    pauseSong();
+    setPlayerDisplay();
+    highlightCurrentSong();
+    setPlayButtonAccessibleText();
+  }
 });
 
 const sortSongs = () => {
-  userData?.songs.sort((a,b) => {
+  userData?.songs.sort((a, b) => {
     if (a.title < b.title) {
       return -1;
     }
